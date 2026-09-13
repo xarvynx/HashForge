@@ -1,112 +1,101 @@
-🔐 Password Strength Analyzer
+# 🔐 Password Strength Analyzer
+
 A professional-grade password strength analysis tool that evaluates password security using advanced metrics, entropy calculations, and pattern detection. Built with a modern web interface and powered by a Python backend.
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow)
+![HTML5](https://img.shields.io/badge/HTML-5-orange)
+![CSS3](https://img.shields.io/badge/CSS-3-blue)
 
+---
 
-📖 Table of Contents
-Overview
+## 📖 Table of Contents
 
-Features
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Architecture](#-architecture)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [How It Works](#-how-it-works)
+- [API Reference](#-api-reference)
+- [Strength Scoring](#-strength-scoring)
+- [Security & Privacy](#-security--privacy)
+- [Roadmap](#-roadmap)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Author](#-author)
 
-Tech Stack
+---
 
-Architecture
+## 🎯 Overview
 
-Getting Started
+**Password Strength Analyzer** is a full-stack application designed to help users create and evaluate strong passwords. Unlike basic checkers that only count characters, this tool performs deep analysis including:
 
-Prerequisites
+- **Entropy calculation** (bits of randomness)
+- **Pattern detection** (dictionary words, keyboard walks, sequences)
+- **Crack time estimation** using modern GPU speeds
+- **Breach checking** against known compromised passwords
+- **Real-time feedback** with actionable suggestions
 
-Installation
+The project combines a sleek **HTML/CSS/JS frontend** with a robust **Python backend** for heavy computation and breach database lookups.
 
-Running the Application
+---
 
-Project Structure
+## ✨ Features
 
-How It Works
+### Core Features
 
-API Reference
+- ✅ Real-time password analysis as you type
+- ✅ Entropy-based scoring (0–100 scale)
+- ✅ Crack time estimation (online, offline, GPU attacks)
+- ✅ Pattern & dictionary detection
+- ✅ Common password blacklist check
+- ✅ Character composition breakdown
+- ✅ Actionable improvement suggestions
+- ✅ Password generator (cryptographically secure)
+- ✅ Copy-to-clipboard functionality
 
-Strength Scoring
+### Advanced Features
 
-Security & Privacy
+- 🔒 HaveIBeenPwned API integration (k-anonymity model)
+- 📊 Detailed metrics dashboard
+- 🎨 Modern, responsive UI with dark/light mode
+- 🧠 Custom scoring algorithm (no third-party dependencies)
+- ⚡ Fast API responses (<100ms)
 
-Screenshots
+---
 
-Roadmap
+## 🛠 Tech Stack
 
-Contributing
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| Frontend | HTML5 | Semantic structure |
+| Frontend | CSS3 | Responsive styling, animations |
+| Frontend | JavaScript (ES6+) | Client-side logic, real-time feedback |
+| Backend | Python 3.9+ | Core analysis engine |
+| Backend | Flask / FastAPI | REST API framework |
+| Backend | zxcvbn (optional) | Advanced pattern matching |
+| Backend | requests | Breach API calls |
+| Backend | hashlib | SHA-1 hashing for breach checks |
 
-License
+---
 
-Author
+## 🏗 Architecture
 
-🎯 Overview
-Password Strength Analyzer is a full-stack application designed to help users create and evaluate strong passwords. Unlike basic checkers that only count characters, this tool performs deep analysis including:
-
-Entropy calculation (bits of randomness)
-
-Pattern detection (dictionary words, keyboard walks, sequences)
-
-Crack time estimation using modern GPU speeds
-
-Breach checking against known compromised passwords
-
-Real-time feedback with actionable suggestions
-
-The project combines a sleek HTML/CSS/JS frontend with a robust Python backend for heavy computation and breach database lookups.
-
-✨ Features
-Core Features
-✅ Real-time password analysis as you type
-
-✅ Entropy-based scoring (0–100 scale)
-
-✅ Crack time estimation (online, offline, GPU attacks)
-
-✅ Pattern & dictionary detection
-
-✅ Common password blacklist check
-
-✅ Character composition breakdown
-
-✅ Actionable improvement suggestions
-
-✅ Password generator (cryptographically secure)
-
-✅ Copy-to-clipboard functionality
-
-Advanced Features
-🔒 HaveIBeenPwned API integration (k-anonymity model)
-
-📊 Detailed metrics dashboard
-
-🎨 Modern, responsive UI with dark/light mode
-
-🧠 Custom scoring algorithm (no third-party dependencies)
-
-⚡ Fast API responses (<100ms)
-
-🛠 Tech Stack
-Layer	Technology	Purpose
-Frontend	HTML5	Semantic structure
-		CSS3	Responsive styling, animations
-		JavaScript (ES6+)	Client-side logic, real-time feedback
-Backend	Python 3.9+	Core analysis engine
-	Flask / FastAPI	REST API framework
-	requests	Breach API calls
-	hashlib	SHA-1 hashing for breach checks
-🏗 Architecture
-text
+```
 ┌─────────────────────────────────────────────────────────┐
-│                     CLIENT (Browser)                    │
+│                     CLIENT (Browser)                     │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │  HTML  │  CSS  │  JavaScript (real-time UI)       │  │
 │  └───────────────────────────────────────────────────┘  │
 └──────────────────────────┬──────────────────────────────┘
-                           │  HTTP / JSON               
+                           │  HTTP / JSON
                            ▼
 ┌─────────────────────────────────────────────────────────┐
-│                  SERVER (Python Flask)                  │
+│                  SERVER (Python Flask)                   │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │  /analyze  │  /generate  │  /breach-check         │  │
 │  └───────────────────────────────────────────────────┘  │
@@ -120,75 +109,96 @@ text
               │  External APIs / Data    │
               │  (HIBP, wordlists)       │
               └──────────────────────────┘
-🚀 Getting Started
-Prerequisites
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
 Make sure you have the following installed:
 
-Python 3.9+ — Download
+- **Python** 3.9+ — [Download](https://www.python.org/downloads/)
+- **pip** — Python package manager
+- **Git** — [Download](https://git-scm.com/)
+- A modern web browser (Chrome, Firefox, Edge, Safari)
 
-pip — Python package manager
+### Installation
 
-Git — Download
+**1. Clone the repository:**
 
-A modern web browser (Chrome, Firefox, Edge, Safari)
-
-Installation
-Clone the repository:
-
-bash
+```bash
 git clone https://github.com/xarvynx/HashForge
-cd password-strength-analyzer
-Create a virtual environment:
+cd HashForge
+```
 
-bash
+**2. Create a virtual environment:**
+
+```bash
 python -m venv venv
-Activate the virtual environment:
+```
+
+**3. Activate the virtual environment:**
 
 Windows:
-bash
+
+```bash
 venv\Scripts\activate
+```
 
-macOS/Linux:
-bash
+macOS / Linux:
+
+```bash
 source venv/bin/activate
+```
 
+**4. Install Python dependencies:**
 
-Install Python dependencies:
-bash
+```bash
 pip install -r requirements.txt
+```
 
-Configure environment variables (optional):
-Create a .env file in the root directory:
+**5. Configure environment variables (optional):**
 
-env
+Create a `.env` file in the root directory:
+
+```env
 FLASK_ENV=development
 FLASK_DEBUG=True
 PORT=5000
 HIBP_API_ENABLED=true
-Running the Application
-Start the Python backend:
+```
 
-bash
+### Running the Application
+
+**1. Start the Python backend:**
+
+```bash
 python app.py
-The server will start at http://127.0.0.1:5000.
+```
 
-Open the frontend:
+The server will start at `http://127.0.0.1:5000`.
 
-Simply open index.html in your browser, or
+**2. Open the frontend:**
 
-Navigate to http://127.0.0.1:5000 if Flask serves static files.
+- Open `index.html` in your browser, **or**
+- Navigate to `http://127.0.0.1:5000` if Flask serves static files.
 
-Start analyzing passwords! 🎉
+**3. Start analyzing passwords!** 🎉
 
-📁 Project Structure
-text
-password-strength-analyzer/
+---
+
+## 📁 Project Structure
+
+```
+HashForge/
 │
 ├── backend/
 │   ├── app.py                  # Flask application entry point
 │   ├── analyzer.py             # Core password analysis logic
 │   ├── entropy.py              # Entropy calculation module
-│   ├── patterns.py             # Pattern detection (sequences, keyboard walks)
+│   ├── patterns.py             # Pattern detection
 │   ├── breach_check.py         # HIBP integration
 │   ├── generator.py            # Secure password generator
 │   ├── constants.py            # Common passwords, dictionaries
@@ -221,48 +231,52 @@ password-strength-analyzer/
 ├── LICENSE
 ├── README.md
 └── requirements.txt
-🧠 How It Works
-1. Client-side (JavaScript)
-Captures user input in real time (debounced for performance)
+```
 
-Sends password securely to the backend via fetch() POST request
+---
 
-Displays strength meter, entropy score, and suggestions dynamically
+## 🧠 How It Works
 
-Never stores or logs the password
+### Client-side (JavaScript)
 
-2. Server-side (Python)
-Receives password via HTTPS POST
+- Captures user input in real time (debounced for performance)
+- Sends password securely to the backend via `fetch()` POST request
+- Displays strength meter, entropy score, and suggestions dynamically
+- Never stores or logs the password
 
-Runs the analysis pipeline:
+### Server-side (Python)
 
-Character set detection — identifies lowercase, uppercase, digits, symbols
-Length calculation — measures raw length
-Entropy estimation — E = L × log₂(R) where L = length, R = pool size
-Pattern detection — checks for:
-Dictionary words
-Repeating characters (aaa, 111)
-Sequential characters (abc, 123)
-Keyboard walks (qwerty, asdfgh)
-Leetspeak substitutions (p@ssw0rd)
-Breach check — SHA-1 hashes the password, queries HIBP API using k-anonymity
-Scoring — combines all factors into a 0–100 score
-Crack time estimation — simulates attacks at 10B guesses/sec (GPU)
-Returns JSON response with score, feedback, and suggestions
+The server receives the password via HTTPS POST and runs the analysis pipeline:
 
-🔌 API Reference
-POST /api/analyze
+1. **Character set detection** — identifies lowercase, uppercase, digits, symbols
+2. **Length calculation** — measures raw length
+3. **Entropy estimation** — `E = L × log₂(R)` where `L` = length, `R` = pool size
+4. **Pattern detection** — checks for dictionary words, repeating characters, sequences, keyboard walks, and leetspeak substitutions
+5. **Breach check** — SHA-1 hashes the password, queries HIBP API using k-anonymity
+6. **Scoring** — combines all factors into a 0–100 score
+7. **Crack time estimation** — simulates attacks at 10B guesses/sec (GPU)
+
+The server returns a JSON response with score, feedback, and suggestions.
+
+---
+
+## 🔌 API Reference
+
+### POST /api/analyze
+
 Analyzes a password's strength.
 
-Request:
+**Request:**
 
-json
+```json
 {
   "password": "MyP@ssw0rd123"
 }
-Response:
+```
 
-json
+**Response:**
+
+```json
 {
   "score": 78,
   "strength": "Strong",
@@ -290,113 +304,138 @@ json
     "symbols": true
   }
 }
-POST /api/generate
+```
+
+### POST /api/generate
+
 Generates a secure random password.
 
-Request:
+**Request:**
 
-json
+```json
 {
   "length": 20,
   "use_symbols": true,
   "use_digits": true,
   "use_uppercase": true
 }
-Response:
+```
 
-json
+**Response:**
+
+```json
 {
   "password": "x7#Kp9$mQ2!vL8@nR4&z",
   "entropy": 131.2
 }
-GET /api/health
+```
+
+### GET /api/health
+
 Health check endpoint.
 
-Response:
+**Response:**
 
-json
+```json
 {
   "status": "healthy",
   "version": "1.0.0"
 }
-📊 Strength Scoring
+```
+
+---
+
+## 📊 Strength Scoring
+
 The overall score (0–100) is calculated using a weighted formula:
 
-Factor	Weight	Description
-Length	30%	Longer passwords score higher
-Entropy	30%	Bits of randomness
-Character Variety	20%	Mix of character types
-Pattern Penalty	-25%	Deductions for weak patterns
-Breach Penalty	-50%	Massive penalty if breached
-Score Interpretation
-Score	Strength	Color	Meaning
-0–20	🔴 Very Weak	Red	Instantly crackable
-21–40	🟠 Weak	Orange	Vulnerable to basic attacks
-41–60	🟡 Fair	Yellow	Moderate protection
-61–80	🟢 Strong	Green	Good for most uses
-81–100	🔵 Very Strong	Blue	Excellent security
-🔒 Security & Privacy
+| Factor | Weight | Description |
+|--------|--------|-------------|
+| Length | 30% | Longer passwords score higher |
+| Entropy | 30% | Bits of randomness |
+| Character Variety | 20% | Mix of character types |
+| Pattern Penalty | −25% | Deductions for weak patterns |
+| Breach Penalty | −50% | Massive penalty if breached |
+
+### Score Interpretation
+
+| Score | Strength | Color | Meaning |
+|-------|----------|-------|---------|
+| 0–20 | Very Weak | Red | Instantly crackable |
+| 21–40 | Weak | Orange | Vulnerable to basic attacks |
+| 41–60 | Fair | Yellow | Moderate protection |
+| 61–80 | Strong | Green | Good for most uses |
+| 81–100 | Very Strong | Blue | Excellent security |
+
+---
+
+## 🔒 Security & Privacy
+
 We take privacy seriously:
 
-✅ Passwords are never stored — not in databases, logs, or memory beyond the request
+- ✅ Passwords are never stored — not in databases, logs, or memory beyond the request
+- ✅ HTTPS-only in production
+- ✅ k-anonymity for breach checks — only the first 5 characters of the SHA-1 hash are sent to HIBP
+- ✅ No third-party analytics on password inputs
+- ✅ Rate limiting to prevent abuse
+- ✅ CORS configured for allowed origins only
 
-✅ HTTPS-only in production
+> ⚠️ **Note:** This tool is for educational and personal use. For production applications, always use established libraries like `zxcvbn` and follow [OWASP password guidelines](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html).
 
-✅ k-anonymity for breach checks — only the first 5 characters of the SHA-1 hash are sent to HIBP
+---
 
-✅ No third-party analytics on password inputs
+## 🗺 Roadmap
 
-✅ Rate limiting to prevent abuse
+- [x] Core strength analysis engine
+- [x] Real-time frontend feedback
+- [x] HIBP breach check integration
+- [x] Password generator
+- [ ] Passphrase generator (Diceware)
+- [ ] Browser extension
+- [ ] CLI tool
+- [ ] Multi-language support (i18n)
+- [ ] Docker deployment
+- [ ] Unit test coverage >90%
 
-✅ CORS configured for allowed origins only
+---
 
-⚠️ Note: This tool is for educational and personal use. For production applications, always use established libraries like zxcvbn and follow OWASP password guidelines.
+## 🤝 Contributing
 
-🗺 Roadmap
-☑ Core strength analysis engine
-☑ Real-time frontend feedback
-☑ HIBP breach check integration
-☑ Password generator
-□ Passphrase generator (Diceware)
-□ Browser extension
-□ CLI tool
-□ Multi-language support (i18n)
-□ Docker deployment
-□ Unit test coverage >90%
-🤝 Contributing
 Contributions are welcome! Please follow these steps:
 
-Fork the repository
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Create a feature branch (git checkout -b feature/AmazingFeature)
+---
 
-Commit your changes (git commit -m 'Add some AmazingFeature')
+## 📄 License
 
-Push to the branch (git push origin feature/AmazingFeature)
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
-Open a Pull Request
+---
 
-Please read CONTRIBUTING.md for details on our code of conduct and development process.
+## 👤 Author
 
-📄 License
-This project is licensed under the MIT License — see the LICENSE file for details.
+- GitHub: [https://github.com/youcefzwawcha-dev] + (https://github.com/xarvynx)
 
-👤 Author
-Your Name
 
-GitHub: @youcefzwawcha-dev + @xarvynx
+---
 
-🙏 Acknowledgments
-HaveIBeenPwned for the breach API
+## 🙏 Acknowledgments
 
-OWASP for password security guidelines
+- [HaveIBeenPwned](https://haveibeenpwned.com/) for the breach API
+- [OWASP](https://owasp.org/) for password security guidelines
+- [NIST SP 800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html) for password standards
+- The open-source community for inspiration and tools
 
-NIST SP 800-63B for password standards
-
-The open-source community for inspiration and tools
+---
 
 <div align="center">
-⭐ If you found this project helpful, please give it a star! ⭐
+
+**⭐ If you found this project helpful, please give it a star! ⭐**
 
 Made with ❤️ and ☕
 
