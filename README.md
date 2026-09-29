@@ -1,4 +1,4 @@
-# 🔐 Password Strength Analyzer
+# 🔐 HASHFORGE
 
 A professional-grade password strength analysis tool that evaluates password security using advanced metrics, entropy calculations, and pattern detection. Built with a **FastAPI backend** for high-performance API responses.
 
@@ -472,7 +472,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ## 👤 Author
 
 - GitHub: [https://github.com/xarvynx](https://github.com/xarvynx)
-
+- Github: [https://github.com/youcefzwawcha-dev](https://github.com/youcefzwawcha-dev)
 ---
 
 ## 🙏 Acknowledgments
