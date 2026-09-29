@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Password Analyser</title>
+</head>
+<body>
+
+    <img class="logo" src="img/secure-logo.png" alt="security logo" height="100px">
+
+    <hr>
+
+    <header>
+        <h1>THE PASSWORD ANALYSER</h1>
+        <p>Analyze your password and improve your security.</p>
+    </header>
+
+    <section class="password-wrapper">
+            <label for="password">Enter your password </label>
+            <br>
+            <div class="password-holder">
+                <span>🔒</span>
+                <input type="password" required placeholder="Enter your password..." id="password">
+                <button class="eye-logo"><img class="eye" src="img/eye.png" id="toggle-password" alt="Show password" height="40px"></button>
+            </div>
+
+            <div class="strength">
+                <progress id="password-strength" value="70" max="100"></progress>
+            </div>
+
+            <div class="result">
+                <strong>Password strength</strong>
+                <strong style="font-size: 25px;" class="status"></strong>
+            </div>
+           <button class="analyse">Analyze Password</button> 
+              <div>
+        <div class="description">
+            <div class="card">
+            <h2>Length</h2>
+            <p></p>
+        </div>
+        <div class="card">
+            <h2>Protection</h2>
+            <p>Security checks</p>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <footer>&copy; Copyright MIT License . &lt; Youcef &gt; and &lt; xarvynx &gt;</footer>
+
+   <script src="/frontend/main.js"></script>
+
+</body>
+</html>
