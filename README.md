@@ -193,19 +193,21 @@ curl -X POST http://127.0.0.1:5000/api/breach-check \
 ```
 HashForge/
 │
-├── backend/
-│   ├── app.py                  # FastAPI application entry point
-│   ├── analyzer.py             # Core password analysis orchestrator
-│   ├── entropy.py              # Shannon entropy + crack time estimation
-│   ├── patterns.py             # Pattern detection (Trie-optimized)
-│   ├── breach_check.py         # HIBP k-anonymity integration
-│   ├── generator.py            # Secure password/passphrase/PIN generator
-│   ├── constants.py            # Wordlists, charsets, keyboard layouts
-│   ├── requirements.txt        # Python dependencies
-│   ├── test_backend.py         # Comprehensive test suite (35 tests)
-│   └── data/
-│       ├── common_passwords.txt    # Top 10k breached passwords
-│       └── dictionary_words.txt    # 356k dictionary words
+├── backend
+│   ├── analyzer.py
+│   ├── app.py
+│   ├── breach_check.py
+│   ├── constants.py
+│   ├── entropy.py
+│   ├── generator.py
+│   ├── patterns.py
+│   ├── requirements.txt
+│   └── test_backend.py
+├── frontend
+│   ├── img
+│   ├── index.html
+│   ├── main.jss
+│   └── style.css
 │
 ├── LICENSE
 ├── README.md
