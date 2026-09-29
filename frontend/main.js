@@ -1,7 +1,4 @@
-/**
- * Security Suite - Frontend API Integration Module
- * Handles API communication with FastAPI backend endpoints.
- */
+
 
 const CONFIG = {
     API_BASE_URL: 'http://127.0.0.1:8000/api',
@@ -9,9 +6,7 @@ const CONFIG = {
 };
 
 class SecurityAPIClient {
-    /**
-     * Generic asynchronous HTTP fetch wrapper.
-     */
+   
     static async request(endpoint, options = {}) {
         const url = `${CONFIG.API_BASE_URL}${endpoint}`;
         const headers = {
@@ -34,9 +29,7 @@ class SecurityAPIClient {
         }
     }
 
-    /**
-     * POST /api/analyze
-     */
+   
     static async analyzePassword(password, checkBreach = true) {
         return this.request('/analyze', {
             method: 'POST',
@@ -47,9 +40,7 @@ class SecurityAPIClient {
         });
     }
 
-    /**
-     * POST /api/generate
-     */
+    
     static async generatePassword(length = 16, options = {}) {
         const payload = {
             length: length,
@@ -64,9 +55,7 @@ class SecurityAPIClient {
         });
     }
 
-    /**
-     * POST /api/generate/passphrase
-     */
+    
     static async generatePassphrase(wordCount = 4, separator = '-', capitalize = true) {
         return this.request('/generate/passphrase', {
             method: 'POST',
@@ -78,18 +67,14 @@ class SecurityAPIClient {
         });
     }
 
-    /**
-     * POST /api/generate/pin?length=X
-     */
+   
     static async generatePin(length = 6) {
         return this.request(`/generate/pin?length=${encodeURIComponent(length)}`, {
             method: 'POST'
         });
     }
 
-    /**
-     * POST /api/breach-check
-     */
+    
     static async checkBreach(password) {
         return this.request('/breach-check', {
             method: 'POST',
@@ -97,10 +82,6 @@ class SecurityAPIClient {
         });
     }
 }
-
-// ============================================================================
-// DOM Controller & Application Lifecycle
-// ============================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Cache
@@ -113,14 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const breachStatus = document.getElementById('breach-status');
     const feedbackList = document.getElementById('feedback-list');
 
-    // Generator Controls
+    
     const generateBtn = document.getElementById('generate-btn');
     const lengthSlider = document.getElementById('length-slider');
     const lengthDisplay = document.getElementById('length-display');
 
     let debounceTimer = null;
 
-    // 1. Password Visibility Toggle
     if (togglePasswordBtn && passwordInput) {
         togglePasswordBtn.addEventListener('click', () => {
             const isPassword = passwordInput.type === 'password';
@@ -129,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Real-time Analysis Driver (Debounced)
     if (passwordInput) {
         passwordInput.addEventListener('input', (e) => {
             const password = e.target.value;
@@ -147,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Analyze Password Core Execution
     async function executeAnalysis(password) {
         try {
             const result = await SecurityAPIClient.analyzePassword(password, true);
@@ -157,22 +135,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 4. Render FastAPI `AnalyzeResponse` Model
     function renderAnalysisResult(data) {
         const { score, strength, entropy, crack_time, feedback, breached } = data;
 
-        // Progress bar and score
         if (strengthMeter) strengthMeter.value = score;
         if (strengthLabel) {
             strengthLabel.textContent = `${strength} (${score}/100)`;
             strengthLabel.className = `strength-text strength-${strength.toLowerCase().replace(/\s+/g, '-')}`;
         }
 
-        // Metrics
         if (entropyValue) entropyValue.textContent = `${entropy.toFixed(1)} bits`;
         if (crackTimeValue) crackTimeValue.textContent = crack_time;
 
-        // Breach Status
         if (breachStatus) {
             if (breached) {
                 breachStatus.textContent = '⚠️ Found in known data breach!';
@@ -183,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Feedback & Suggestions
         if (feedbackList) {
             feedbackList.innerHTML = '';
             
@@ -204,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 5. Password Generation Handler
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
             const length = lengthSlider ? parseInt(lengthSlider.value, 10) : 16;
@@ -222,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. UI Synchronization Helpers
     if (lengthSlider && lengthDisplay) {
         lengthSlider.addEventListener('input', (e) => {
             lengthDisplay.textContent = e.target.value;
