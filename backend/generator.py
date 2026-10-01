@@ -19,6 +19,7 @@ SYMBOLS = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~"  # 32
 def generate_password(
     length: int = 20,
     use_uppercase: bool = True,
+    use_lowercase: bool = True,
     use_digits: bool = True,
     use_symbols: bool = True,
     exclude_ambiguous: bool = False,
@@ -29,6 +30,7 @@ def generate_password(
     Args:
         length: Password length (8-128)
         use_uppercase: Include uppercase letters
+        use_lowercase: Include lowercase letters
         use_digits: Include digits
         use_symbols: Include symbols
         exclude_ambiguous: Exclude ambiguous chars (l, 1, I, O, 0, etc.)
@@ -40,13 +42,19 @@ def generate_password(
     length = max(8, min(128, length))
 
     # Build character pool
-    pool = LOWERCASE
+    pool = ""
+    if use_lowercase:
+        pool += LOWERCASE
     if use_uppercase:
         pool += UPPERCASE
     if use_digits:
         pool += DIGITS
     if use_symbols:
         pool += SYMBOLS
+    
+    # Ensure at least one character type is selected
+    if not pool:
+        pool = LOWERCASE
 
     # Optionally remove ambiguous characters
     if exclude_ambiguous:

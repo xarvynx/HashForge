@@ -33,6 +33,7 @@ class AnalyzeResponse(BaseModel):
 class GenerateRequest(BaseModel):
     length: int = Field(default=20, ge=8, le=128, description="Password length")
     use_uppercase: bool = Field(default=True, description="Include uppercase letters")
+    use_lowercase: bool = Field(default=True, description="Include lowercase letters")
     use_digits: bool = Field(default=True, description="Include digits")
     use_symbols: bool = Field(default=True, description="Include symbols")
     exclude_ambiguous: bool = Field(default=False, description="Exclude ambiguous characters")
@@ -133,6 +134,7 @@ async def generate(request: GenerateRequest):
         result = generate_password(
             length=request.length,
             use_uppercase=request.use_uppercase,
+            use_lowercase=request.use_lowercase,
             use_digits=request.use_digits,
             use_symbols=request.use_symbols,
             exclude_ambiguous=request.exclude_ambiguous,

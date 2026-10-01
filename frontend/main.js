@@ -1,12 +1,9 @@
-
-
 const CONFIG = {
-    API_BASE_URL: 'http://127.0.0.1:8000/api',
+    API_BASE_URL: 'http://127.0.0.1:5000/api',
     DEBOUNCE_DELAY_MS: 350
 };
 
 class SecurityAPIClient {
-   
     static async request(endpoint, options = {}) {
         const url = `${CONFIG.API_BASE_URL}${endpoint}`;
         const headers = {
@@ -29,7 +26,6 @@ class SecurityAPIClient {
         }
     }
 
-   
     static async analyzePassword(password, checkBreach = true) {
         return this.request('/analyze', {
             method: 'POST',
@@ -40,12 +36,10 @@ class SecurityAPIClient {
         });
     }
 
-    
     static async generatePassword(length = 16, options = {}) {
         const payload = {
             length: length,
             use_uppercase: options.useUppercase ?? true,
-            use_lowercase: options.useLowercase ?? true,
             use_digits: options.useDigits ?? true,
             use_symbols: options.useSymbols ?? true
         };
@@ -55,7 +49,6 @@ class SecurityAPIClient {
         });
     }
 
-    
     static async generatePassphrase(wordCount = 4, separator = '-', capitalize = true) {
         return this.request('/generate/passphrase', {
             method: 'POST',
@@ -67,14 +60,12 @@ class SecurityAPIClient {
         });
     }
 
-   
     static async generatePin(length = 6) {
         return this.request(`/generate/pin?length=${encodeURIComponent(length)}`, {
             method: 'POST'
         });
     }
 
-    
     static async checkBreach(password) {
         return this.request('/breach-check', {
             method: 'POST',
@@ -84,20 +75,12 @@ class SecurityAPIClient {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Cache
-    const passwordInput = document.getElementById('password-input');
-    const togglePasswordBtn = document.getElementById('toggle-password-btn');
-    const strengthMeter = document.getElementById('strength-meter');
-    const strengthLabel = document.getElementById('strength-label');
-    const entropyValue = document.getElementById('entropy-value');
-    const crackTimeValue = document.getElementById('crack-time-value');
-    const breachStatus = document.getElementById('breach-status');
-    const feedbackList = document.getElementById('feedback-list');
-
-    
-    const generateBtn = document.getElementById('generate-btn');
-    const lengthSlider = document.getElementById('length-slider');
-    const lengthDisplay = document.getElementById('length-display');
+    // DOM Cache - match existing HTML IDs
+    const passwordInput = document.getElementById('password');
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const strengthMeter = document.getElementById('password-strength');
+    const strengthLabel = document.querySelector('.result .status');
+    const analyseBtn = document.querySelector('.analyse');
 
     let debounceTimer = null;
 
@@ -141,51 +124,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (strengthMeter) strengthMeter.value = score;
         if (strengthLabel) {
             strengthLabel.textContent = `${strength} (${score}/100)`;
-            strengthLabel.className = `strength-text strength-${strength.toLowerCase().replace(/\s+/g, '-')}`;
+            strengthLabel.className = `status strength-${strength.toLowerCase().replace(/\s+/g, '-')}`;
         }
 
-        if (entropyValue) entropyValue.textContent = `${entropy.toFixed(1)} bits`;
-        if (crackTimeValue) crackTimeValue.textContent = crack_time;
-
-        if (breachStatus) {
-            if (breached) {
-                breachStatus.textContent = '⚠️ Found in known data breach!';
-                breachStatus.className = 'status-alert status-breached';
-            } else {
-                breachStatus.textContent = '✓ No known breach recorded';
-                breachStatus.className = 'status-alert status-safe';
-            }
+        // Update description cards with entropy and crack time
+        const cards = document.querySelectorAll('.description .card');
+        if (cards.length >= 2) {
+            cards[0].querySelector('p').textContent = `${entropy.toFixed(1)} bits entropy`;
+            cards[1].querySelector('p').textContent = `GPU crack: ${crack_time?.gpu_cluster || 'Unknown'}`;
         }
 
-        if (feedbackList) {
-            feedbackList.innerHTML = '';
-            
-            if (feedback.warning) {
-                const warningLi = document.createElement('li');
-                warningLi.className = 'feedback-warning';
-                warningLi.textContent = feedback.warning;
-                feedbackList.appendChild(warningLi);
-            }
-
-            if (feedback.suggestions && feedback.suggestions.length > 0) {
-                feedback.suggestions.forEach(suggestion => {
-                    const li = document.createElement('li');
-                    li.textContent = suggestion;
-                    feedbackList.appendChild(li);
-                });
-            }
+        // Update breach status in second card
+        if (breached && cards.length >= 2) {
+            cards[1].querySelector('p').textContent = '⚠️ Found in data breach!';
         }
     }
 
-    if (generateBtn) {
-        generateBtn.addEventListener('click', async () => {
-            const length = lengthSlider ? parseInt(lengthSlider.value, 10) : 16;
+    // Generate password - update input and re-analyze
+    if (analyseBtn) {
+        analyseBtn.addEventListener('click', async () => {
+            if (!passwordInput || !passwordInput.value) return;
             
             try {
-                const result = await SecurityAPIClient.generatePassword(length);
+                const result = await SecurityAPIClient.generatePassword(16);
                 if (passwordInput) {
                     passwordInput.value = result.password;
-                    // Trigger live analysis manually on generated result
                     executeAnalysis(result.password);
                 }
             } catch (error) {
@@ -194,25 +157,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (lengthSlider && lengthDisplay) {
-        lengthSlider.addEventListener('input', (e) => {
-            lengthDisplay.textContent = e.target.value;
-        });
-    }
-
     function resetUI() {
         if (strengthMeter) strengthMeter.value = 0;
-        if (strengthLabel) strengthLabel.textContent = 'None';
-        if (entropyValue) entropyValue.textContent = '0 bits';
-        if (crackTimeValue) crackTimeValue.textContent = 'Instant';
-        if (breachStatus) breachStatus.textContent = 'Not Checked';
-        if (feedbackList) feedbackList.innerHTML = '';
+        if (strengthLabel) {
+            strengthLabel.textContent = 'None';
+            strengthLabel.className = 'status';
+        }
+        const cards = document.querySelectorAll('.description .card');
+        if (cards.length >= 2) {
+            cards[0].querySelector('p').textContent = '';
+            cards[1].querySelector('p').textContent = 'Security checks';
+        }
     }
 
     function renderError(message) {
         if (strengthLabel) {
             strengthLabel.textContent = `Error: ${message}`;
-            strengthLabel.className = 'strength-text strength-error';
+            strengthLabel.className = 'status strength-error';
         }
     }
 });
