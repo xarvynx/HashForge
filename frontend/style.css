@@ -150,13 +150,13 @@ progress{
     width:100%;
     padding: 10px;
     font-size: x-large;
-    background-color: var(--bg-hover);
+    background-color: var(--bg-input);
     border: none;
     border-radius: 20px;
-    box-shadow: 0 0 5px #22D3EE,
+    /* box-shadow: 0 0 5px #22D3EE,
         0 0 10px #22D3EE,
-        0 0 20px rgba(34, 211, 238, 0.6);
-    color: var(--text-primary);   
+        0 0 20px rgba(34, 211, 238, 0.6); */
+    color: var(--border-focus);   
 }
 
 .description{
@@ -185,4 +185,10 @@ footer{
     padding: 15px;
     background: transparent;
     box-sizing: border-box;
+}
+
+
+footer a{
+    text-decoration: none;
+    color: #22D3EE;
 }
