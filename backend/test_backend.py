@@ -149,8 +149,8 @@ def test_analyze_weak_password():
 def test_analyze_common_password():
     result = analyze_password("password", check_breach_api=False)
     # Without breach check: critical pattern (25) + high dict (15) = 40 penalty, capped at 25
-    # Base score ~31, final ~6
-    assert result.score <= 10
+    # Base score ~39, final ~14 (scaled from old ~31/6)
+    assert result.score <= 15
     assert result.strength == "Very Weak"
     assert "common_password" in [p.pattern_type for p in result.patterns]
 

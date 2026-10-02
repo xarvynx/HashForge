@@ -99,34 +99,36 @@ def _calculate_score(
     length: int,
 ) -> int:
     """
-    Calculate overall score (0-100) using weighted formula from README:
+    Calculate overall score (0-100) using weighted formula:
 
     | Factor | Weight | Description |
     |--------|--------|-------------|
-    | Length | 30% | Longer passwords score higher |
-    | Entropy | 30% | Bits of randomness |
-    | Character Variety | 20% | Mix of character types |
-    | Pattern Penalty | -25% | Deductions for weak patterns |
-    | Breach Penalty | -50% | Massive penalty if breached |
+    | Length | 37.5% | Longer passwords score higher (max at 20+ chars) |
+    | Entropy | 37.5% | Bits of randomness (max at 80+ bits) |
+    | Character Variety | 25% | Mix of character types |
+    | Pattern Penalty | -25 | Deductions for weak patterns (capped at 25) |
+    | Breach Penalty | -50 | Massive penalty if found in breaches |
+
+    Weights scaled proportionally from original 30/30/20 to sum to 100.
     """
-    # Length score (0-30): max at 20+ chars
-    length_score = min(30, (length / 20) * 30)
+    # Length score (0-37.5): max at 20+ chars
+    length_score = min(37.5, (length / 20) * 37.5)
 
-    # Entropy score (0-30): max at 80+ bits
-    entropy_score = min(30, (entropy / 80) * 30)
+    # Entropy score (0-37.5): max at 80+ bits
+    entropy_score = min(37.5, (entropy / 80) * 37.5)
 
-    # Character variety score (0-20)
+    # Character variety score (0-25): 6.25 pts each for 4 types
     variety_score = 0
     if composition["lowercase"]:
-        variety_score += 5
+        variety_score += 6.25
     if composition["uppercase"]:
-        variety_score += 5
+        variety_score += 6.25
     if composition["digits"]:
-        variety_score += 5
+        variety_score += 6.25
     if composition["symbols"]:
-        variety_score += 5
+        variety_score += 6.25
 
-    # Base score (max 80)
+    # Base score (max 100)
     base_score = length_score + entropy_score + variety_score
 
     # Pattern penalty (max -25)

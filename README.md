@@ -162,7 +162,18 @@ python app.py
 
 The server will start at `http://127.0.0.1:5000`.
 
-**2. Access API documentation:**
+**2. Start the frontend (in a new terminal):**
+
+```bash
+cd frontend
+python -m http.server 3000
+```
+
+Then open `http://127.0.0.1:3000` in your browser.
+
+> **Alternative:** Just open `frontend/index.html` directly in your browser (backend must be running on port 5000).
+
+**3. Access API documentation:**
 
 - Swagger UI: `http://127.0.0.1:5000/docs`
 - ReDoc: `http://127.0.0.1:5000/redoc`
@@ -206,7 +217,7 @@ HashForge/
 ├── frontend
 │   ├── img
 │   ├── index.html
-│   ├── main.jss
+│   ├── main.js
 │   └── style.css
 │
 ├── LICENSE
@@ -405,11 +416,13 @@ Health check endpoint.
 
 | Factor | Weight | Description |
 |--------|--------|-------------|
-| Length | 30% | Longer passwords score higher (max at 20 chars) |
-| Entropy | 30% | Bits of randomness (max at 80 bits) |
-| Character Variety | 20% | Mix of character types (5 pts each) |
-| Pattern Penalty | −25% | Deductions for weak patterns (capped at 25) |
-| Breach Penalty | −50% | Massive penalty if found in breaches |
+| Length | 37.5% | Longer passwords score higher (max at 20+ chars) |
+| Entropy | 37.5% | Bits of randomness (max at 80+ bits) |
+| Character Variety | 25% | Mix of character types (6.25 pts each) |
+| Pattern Penalty | −25 | Deductions for weak patterns (capped at 25) |
+| Breach Penalty | −50 | Massive penalty if found in breaches |
+
+> **Note:** Weights scaled proportionally from original 30/30/20 to sum to 100 for the base score.
 
 ### Score Interpretation
 
